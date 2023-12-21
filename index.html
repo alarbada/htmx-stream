@@ -1,10 +1,10 @@
 <html>
   <head>
     <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-    <script type="module" src="./index.js"></script>
+    <script src="./index.js"></script>
   </head>
   <body>
-      <form hx-ext="stream" hx-get="/stream">
+      <form hx-swap="outerHTML" hx-ext="stream" hx-get="/stream">
         <button>stream changes</button>
       </form>
   </body>

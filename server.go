@@ -19,6 +19,7 @@ func main() {
 		`))
 		c.Writer.Flush()
 		<-time.After(300 * time.Millisecond)
+
 		c.Writer.Write([]byte(`
 			<div>
 				<h1>Second streaming part</h1>
@@ -28,7 +29,7 @@ func main() {
 		<-time.After(300 * time.Millisecond)
 
 		c.Writer.Write([]byte(`
-		  <form hx-get="http://localhost:8080/">
+		  <form hx-swap="outerHTML" hx-ext="stream" hx-get="/stream">
 			<h1> final part </h1>
 			<button>do it again</button>
 		  </form>

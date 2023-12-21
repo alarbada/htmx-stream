@@ -1,6 +1,3 @@
-/// <reference lib="dom" />
-/// <reference lib="dom.iterable" />
-
 window.htmx.defineExtension("stream", {
   onEvent: function (name, evt) {
     if (name === "htmx:beforeRequest") {
