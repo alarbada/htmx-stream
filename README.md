@@ -51,7 +51,3 @@ On the server:
 
 
 The extension will overwrite the previous contents of the target with the new streamed html. 
-
-# Limitations
-
-hx-target is not supported
