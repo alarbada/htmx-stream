@@ -1,0 +1,8 @@
+{
+  "name": "htmx-stream",
+  "module": "index.ts",
+  "type": "module",
+  "dependencies": {
+    "htmx.org": "^1.9.9"
+  }
+}
