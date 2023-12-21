@@ -2,6 +2,11 @@ window.htmx.defineExtension("stream", {
   onEvent: function (name, evt) {
     if (name === "htmx:beforeRequest") {
       var element = evt.detail.elt;
+      if (evt.detail.requestConfig.target) {
+        element['__target'] = evt.detail.requestConfig.target;
+        element = evt.detail.requestConfig.target;
+      }
+
       var xhr = evt.detail.xhr;
 
       var lastLength = 0;
@@ -18,6 +23,11 @@ window.htmx.defineExtension("stream", {
   },
   transformResponse: function (text, _xhr, elt) {
     var lastLength = elt['__streamedChars'];
+    var target = elt['__target'];
+    if (target) {
+      lastLength = target['__streamedChars'];
+    }
+      
     if (lastLength) {
       var newText = text.substring(lastLength);
       return newText;

@@ -4,8 +4,12 @@
     <script src="./index.js"></script>
   </head>
   <body>
-      <form hx-swap="outerHTML" hx-ext="stream" hx-get="/stream">
-        <button>stream changes</button>
-      </form>
+    <p>
+      <a hx-ext="stream" hx-boost="true" href="/page1">streamed page 1</a>
+    </p>
+      
+    <form hx-swap="outerHTML" hx-ext="stream" hx-get="/stream">
+      <button>stream changes</button>
+    </form>
   </body>
 </html>
