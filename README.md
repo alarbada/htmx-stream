@@ -1,6 +1,8 @@
 # htmx-stream
 
-An htmx extension for streaming contents using http streaming
+A proof of concept htmx extension for streaming contents using http streaming.
+
+Archived now, as I don't really want to improve it much further. But the core principle still works like wonders!
 
 ## installation
 
