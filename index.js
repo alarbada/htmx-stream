@@ -1,36 +1,46 @@
 window.htmx.defineExtension("stream", {
   onEvent: function (name, evt) {
     if (name === "htmx:beforeRequest") {
-      var element = evt.detail.elt;
+      let element = evt.detail.elt;
       if (evt.detail.requestConfig.target) {
         element['__target'] = evt.detail.requestConfig.target;
         element = evt.detail.requestConfig.target;
       }
 
-      var xhr = evt.detail.xhr;
+      const xhr = evt.detail.xhr;
 
-      var lastLength = 0;
+      let lastLength = 0;
+      let isBlazorStream = false;
       xhr.addEventListener('readystatechange', function () {
+        if (xhr.readyState === 2) {
+          isBlazorStream = xhr.getResponseHeader("blazor-enhanced-nav") === "allow";
+        }
+
         if (xhr.readyState === 2 || xhr.readyState === 3) {
-          var newText = xhr.responseText.substring(lastLength);
+
+          element.innerHTML = isBlazorStream ? xhr.responseText : xhr.responseText.substring(lastLength);
           element['__streamedChars'] = lastLength;
           lastLength = xhr.responseText.length;
-          element.innerHTML = newText;
         }
       });
     }
     return true;
   },
   transformResponse: function (text, _xhr, elt) {
-    var lastLength = elt['__streamedChars'];
-    var target = elt['__target'];
+    let lastLength = elt['__streamedChars'];
+    let target = elt['__target'];
+
     if (target) {
+      const isBlazorStream = _xhr.getResponseHeader("blazor-enhanced-nav") === "allow";
+      if (isBlazorStream) {
+        return target.innerHTML;
+      }
+
       lastLength = target['__streamedChars'];
     }
-      
+
     if (lastLength) {
-      var newText = text.substring(lastLength);
-      return newText;
+      return text.substring(lastLength);
     }
 
     return text;
